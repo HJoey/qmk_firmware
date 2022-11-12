@@ -49,8 +49,8 @@
 
 
 #ifdef RGB_MATRIX_ENABLE
-#define RGBLED_NUM 35    // Number of LEDs
-#define RGBLED_NUM 35    // Number of LEDs
+#define RGBLED_NUM 36    // Number of LEDs
+#define RGBLED_NUM 36    // Number of LEDs
 #define DRIVER_LED_TOTAL RGBLED_NUM
 #endif
 
@@ -69,13 +69,12 @@
 	//#define RGBLIGHT_EFFECT_ALTERNATING
 	//#define RGBLIGHT_EFFECT_TWINKLE
 
-    #define RGBLED_NUM 70
+    #define RGBLED_NUM 72
 	//#define RGBLED_SPLIT
-	#define RGBLED_SPLIT { 35, 35 } // haven't figured out how to use this yet
+	#define RGBLED_SPLIT { 36, 36 } // haven't figured out how to use this yet
 
-	//#define RGBLED_NUM 30
     #define RGBLIGHT_LIMIT_VAL 120
-    #define RGBLIGHT_HUE_STEP 10
+    #define RGBLIGHT_HUE_STEP 2
     #define RGBLIGHT_SAT_STEP 17
     #define RGBLIGHT_VAL_STEP 17
 #endif
