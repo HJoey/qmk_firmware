@@ -39,28 +39,21 @@
 #endif
 #define ENCODER_DIRECTION_FLIP
 
+#define COMBO_COUNT 2
 
 #define RGBLIGHT_SLEEP
-//
 #define RGBLIGHT_LAYERS
 
 /* ws2812 RGB LED */
 #define RGB_DI_PIN D3
-
-
-#ifdef RGB_MATRIX_ENABLE
-#define RGBLED_NUM 36    // Number of LEDs
-#define RGBLED_NUM 36    // Number of LEDs
-#define DRIVER_LED_TOTAL RGBLED_NUM
-#endif
 
 #ifdef RGBLIGHT_ENABLE
     #undef RGBLED_NUM
 
     //#define RGBLIGHT_ANIMATIONS
 	//#define RGBLIGHT_EFFECT_BREATHING
-	#define RGBLIGHT_EFFECT_RAINBOW_MOOD
-	//#define RGBLIGHT_EFFECT_RAINBOW_SWIRL
+	//#define RGBLIGHT_EFFECT_RAINBOW_MOOD
+	#define RGBLIGHT_EFFECT_RAINBOW_SWIRL
 	//#define RGBLIGHT_EFFECT_SNAKE
 	//#define RGBLIGHT_EFFECT_KNIGHT
 	//#define RGBLIGHT_EFFECT_CHRISTMAS
@@ -73,10 +66,17 @@
 	//#define RGBLED_SPLIT
 	#define RGBLED_SPLIT { 36, 36 } // haven't figured out how to use this yet
 
-    #define RGBLIGHT_LIMIT_VAL 120
-    #define RGBLIGHT_HUE_STEP 2
-    #define RGBLIGHT_SAT_STEP 17
-    #define RGBLIGHT_VAL_STEP 17
+    #define RGBLIGHT_LIMIT_VAL 100
+    #define RGBLIGHT_HUE_STEP 1
+    #define RGBLIGHT_SAT_STEP 10
+    #define RGBLIGHT_VAL_STEP 10
+    #define RGBLIGHT_LAYERS_RETAIN_VAL
+#endif
+
+#ifdef RGB_MATRIX_ENABLE
+#define RGBLED_NUM 36    // Number of LEDs
+#define RGBLED_NUM 36    // Number of LEDs
+#define DRIVER_LED_TOTAL RGBLED_NUM
 #endif
 
 #ifdef RGB_MATRIX_ENABLE
