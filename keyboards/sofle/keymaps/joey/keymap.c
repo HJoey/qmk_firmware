@@ -41,12 +41,13 @@
 enum sofle_layers {
     _DEFAULTS = 0,
     _MAC = 0,
-    _WIN,
-    _LOWER,
-    _RAISE,
-    _ADJUST,
-    _NUMPAD,
-    _SWITCH
+    _WIN,//1
+    _LOWER,//2
+    _RAISE,//3
+    _ADJUST,//4
+    _NUMPAD,//5
+    _TMUX,//6
+    _SWITCH//7
 };
 
 enum custom_keycodes {
@@ -66,7 +67,18 @@ enum custom_keycodes {
     MC_TMN,
     MC_TMP,
     MC_TMC,
-    MC_TMW
+    MC_TMW,
+    MC_TMLeft,
+    MC_TMRght,
+    MC_TMUp,
+    MC_TMDn,
+    MC_TMVS,
+    MC_TMHS,
+    MC_TMVis,
+    MC_ViWL,
+    MC_ViWR,
+    MC_ViWU,
+    MC_ViWD
 };
 
 const uint16_t PROGMEM combo_eql[] = {KC_J, KC_K, COMBO_END};
@@ -100,7 +112,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|------+-------+--------+--------+--------+------|                   |--------+-------+--------+--------+--------+---------|
 MT(MOD_LSFT,KC_TAB),KC_A,KC_S, KC_D,  KC_F,    KC_G,                      KC_H,    KC_J,   KC_K,    KC_L,    KC_SCLN, KC_QUOT,
   //|------+-------+--------+--------+--------+------|  ===  |   |  ===  |--------+-------+--------+--------+--------+---------|
-MT(MOD_LCTL,KC_CAPS),KC_Z,KC_X, KC_C,  KC_V  ,  KC_B, KC_D_MUTE,  KC_MUTE,KC_N,    KC_M,   KC_COMM, KC_DOT,  KC_SLSH, KC_RSFT,
+MT(MOD_LCTL,KC_CAPS),KC_Z,KC_X, KC_C,  KC_V  , LT(_TMUX,KC_B), KC_D_MUTE,  KC_MUTE,KC_N,    KC_M,   KC_COMM, KC_DOT,  KC_SLSH, KC_RSFT,
   //|------+-------+--------+--------+--------+------|  ===  |   |  ===  |--------+-------+--------+--------+--------+---------|
                  KC_GRV  , KC_LOPT, KC_LGUI  , KC_LOWER, KC_SPC  , KC_ENT, KC_RAISE ,KC_RGUI, KC_ROPT, KC_RCTL
   //            \--------+--------+--------+---------+-------|   |--------+---------+--------+---------+-------/
@@ -128,7 +140,7 @@ MT(MOD_LCTL,KC_CAPS),KC_Z,KC_X, KC_C,  KC_V  ,  KC_B, KC_D_MUTE,  KC_MUTE,KC_N, 
   //|------+-------+--------+--------+--------+------|                   |--------+-------+--------+--------+--------+---------|
 MT(MOD_LSFT,KC_TAB),KC_A,KC_S,KC_D,  KC_F,    KC_G,                      KC_H,    KC_J,   KC_K,    KC_L,    KC_SCLN, KC_QUOT,
   //|------+-------+--------+--------+--------+------|  ===  |   |  ===  |--------+-------+--------+--------+--------+---------|
-MT(MOD_LCTL,KC_CAPS),KC_Z,KC_X, KC_C,  KC_V  ,  KC_B, KC_D_MUTE,  KC_MUTE,KC_N,    KC_M,   KC_COMM, KC_DOT,  KC_SLSH, KC_RSFT,
+MT(MOD_LCTL,KC_CAPS),KC_Z,KC_X, KC_C, KC_V, LT(_TMUX,KC_B),    KC_D_MUTE,  KC_MUTE,KC_N,    KC_M,   KC_COMM, KC_DOT,  KC_SLSH, KC_RSFT,
   //|------+-------+--------+--------+--------+------|  ===  |   |  ===  |--------+-------+--------+--------+--------+---------|
                  KC_GRV  , KC_LGUI, KC_LALT, KC_LOWER, KC_SPC   , KC_ENT, KC_RAISE , KC_RALT, KC_RGUI,  KC_RALT
   //            \--------+--------+--------+---------+-------|   |--------+---------+--------+---------+-------/
@@ -168,9 +180,9 @@ MT(MOD_LCTL,KC_CAPS),KC_Z,KC_X, KC_C,  KC_V  ,  KC_B, KC_D_MUTE,  KC_MUTE,KC_N, 
  * |------+------+------+------+------+------|                    |------+------+------+------+------+------|
  * |  Grv |  ViQ | ViW  | ViRDn| CtrR |ViNTab|                    | ViRUp| CtrU | CtrI | CtrO | Ctrlt| Ctr] |
  * |------+------+------+------+------+------|                    |------+------+------+------+------+------|
- * |  Esc |      | TMW  | CtrD | Vi_gT|Vi_gt |-------.    ,-------| Left | Down | Up   | Right| BSPC | DEL  |
+ * |  Esc |      | CtrW | CtrD | Vi_gT|Vi_gt |-------.    ,-------| Left | Down | Up   | Right| BSPC | DEL  |
  * |------+------+------+------+------+------|       |    |  MUTE |------+------+------+------+------+------|
- * | Ctrl |      |      | TMC  | TMP  | TMN  |-------|    |-------| Home | End  | PgUp | PgDn |      |      |
+ * | Ctrl |      |      |      |      | CtrB |-------|    |-------| Home | End  | PgUp | PgDn |      |      |
  * `-----------------------------------------/       /     \      \-----------------------------------------'
  *            |      |      |      |      | /       /       \      \  |      |      |      |      |
  *            |      |      |      |      |/       /         \      \ |      |      |      |      |
@@ -182,9 +194,9 @@ MT(MOD_LCTL,KC_CAPS),KC_Z,KC_X, KC_C,  KC_V  ,  KC_B, KC_D_MUTE,  KC_MUTE,KC_N, 
   //|------+-------+--------+--------+--------+------|                   |--------+-------+--------+--------+--------+---------|
     KC_GRV ,MC_ViQ , MC_ViW , C(KC_E), C(KC_R),MC_ViNewTab,                 C(KC_Y) ,C(KC_U), C(KC_I), C(KC_O),C(KC_T),C(KC_RBRC),
   //|------+-------+--------+--------+--------+------|                   |--------+-------+--------+--------+--------+---------|
-    KC_ESC , KC_NO , MC_TMW, C(KC_D) , MC_VigT,MC_Vigt,                    KC_LEFT ,KC_DOWN, KC_UP , KC_RGHT , KC_BSPC, KC_DEL , 
+    KC_ESC , KC_NO , C(KC_W), C(KC_D), MC_VigT,MC_Vigt,                    KC_LEFT ,KC_DOWN, KC_UP , KC_RGHT , KC_BSPC, KC_DEL , 
   //|------+-------+--------+--------+--------+------|  ===  |   |  ===  |--------+-------+--------+--------+--------+---------|
-  _______,  KC_NO  , KC_NO  , MC_TMC, MC_TMP, MC_TMN ,_______,    _______,KC_HOME, KC_END ,KC_PGUP, KC_PGDN, KC_NO  ,_______ ,
+  _______,   KC_NO  , KC_NO  , KC_NO, KC_NO , C(KC_B),_______,    _______,KC_HOME, KC_END ,KC_PGUP, KC_PGDN, KC_NO  ,_______ ,
   //|------+-------+--------+--------+--------+------|  ===  |   |  ===  |--------+-------+--------+--------+--------+---------|
                  _______, _______, _______, _______, _______,     _______, _______, _______, _______, _______
   //            \--------+--------+--------+---------+-------|   |--------+---------+--------+---------+-------/
@@ -211,7 +223,7 @@ MT(MOD_LCTL,KC_CAPS),KC_Z,KC_X, KC_C,  KC_V  ,  KC_B, KC_D_MUTE,  KC_MUTE,KC_N, 
   //|------+-------+--------+--------+--------+------|                   |--------+-------+--------+--------+--------+---------|
   RGB_TOG, RGB_HUI,RGB_SAI, RGB_VAI, _______ , KC_MAC ,                C(KC_LEFT),C(KC_DOWN),C(KC_UP),C(KC_RGHT),KC_UP,XXXXXXX,
   //|------+-------+--------+--------+--------+------|  ===  |   |  ===  |--------+-------+--------+--------+--------+---------|
-  RGB_MOD, RGB_HUD,RGB_SAD, RGB_VAD, XXXXXXX, KC_WIN ,XXXXXXX,    XXXXXXX, KC_MPRV,KC_MPLY, KC_MNXT,KC_LEFT , KC_DOWN, KC_RGHT,
+  RGB_MOD, RGB_HUD,RGB_SAD, RGB_VAD, _______ , KC_WIN ,XXXXXXX,    XXXXXXX, KC_MPRV,KC_MPLY, KC_MNXT,KC_LEFT , KC_DOWN, KC_RGHT,
   //|------+-------+--------+--------+--------+------|  ===  |   |  ===  |--------+-------+--------+--------+--------+---------|
                    _______, _______, _______, _______, _______,     _______, _______, _______, _______, _______
     //            \--------+--------+--------+---------+-------|   |--------+---------+--------+---------+-------/
@@ -244,11 +256,39 @@ MT(MOD_LCTL,KC_CAPS),KC_Z,KC_X, KC_C,  KC_V  ,  KC_B, KC_D_MUTE,  KC_MUTE,KC_N, 
   //            \--------+--------+--------+---------+-------|   |--------+---------+--------+---------+-------/
 ),
 
+/* TMUX
+ * ,-----------------------------------------.                    ,-----------------------------------------.
+ * |      |      |      |      |      |      |                    |      |      |      |      |      |      |
+ * |------+------+------+------+------+------|                    |------+------+------+------+------+------|
+ * |  `   |      |  TMW |      |      |      |                    |      |      |      |      |  TM[ |      |
+ * |------+------+------+------+------+------|                    |------+------+------+------+------+------|
+ * |      |      | TMHS |      |      |      |-------.    ,-------|  TML | TMD  | TMU  |  TMR |      |      |
+ * |------+------+------+------+------+------|       |    | MUTE  |------+------+------+------+------+------|
+ * |      |      |      |  TMC | TMVS |      |-------|    |-------|  TMP | TMN  |      |      |      |      |
+ * `-----------------------------------------/       /     \      \-----------------------------------------'
+ *            | Bspc | WIN  |LOWER | Enter| /Space  /       \Enter \  |SPACE | 0    |  .   | RAlt |
+ *            |      |      |      |      |/       /         \      \ |      |      |      |      |
+ *            `----------------------------------'           '------''---------------------------'
+ */
+[_TMUX] = LAYOUT(
+  //,------------------------------------------------.                    ,---------------------------------------------------.
+  _______, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                   _______, KC_NO, XXXXXXX, XXXXXXX,KC_NO, XXXXXXX,
+  //|------+-------+--------+--------+--------+------|                   |--------+-------+--------+--------+--------+---------|
+  _______, XXXXXXX, MC_TMW , XXXXXXX, XXXXXXX, XXXXXXX,                   XXXXXXX, KC_NO,  KC_NO,   KC_NO,   MC_TMVis, KC_NO ,
+  //|------+-------+--------+--------+--------+------|                   |--------+-------+--------+--------+--------+---------|
+  _______, XXXXXXX, MC_TMHS, XXXXXXX, XXXXXXX, XXXXXXX,                 MC_TMLeft,MC_TMDn,MC_TMUp,MC_TMRght, KC_NO,  KC_NO,
+  //|------+-------+--------+--------+--------+------|  ===  |   |  ===  |--------+-------+--------+--------+--------+---------|
+  _______, XXXXXXX, XXXXXXX, MC_TMC , MC_TMVS, XXXXXXX,_______,   _______,MC_TMP , MC_TMN ,  KC_NO,   KC_NO,   KC_NO, _______,
+  //|------+-------+--------+--------+--------+------|  ===  |   |  ===  |--------+-------+--------+--------+--------+---------|
+              _______, _______, _______, _______, _______,        _______, _______,  _______,   _______, _______
+  //            \--------+--------+--------+---------+-------|   |--------+---------+--------+---------+-------/
+),
+
 /* SWITCH
  * ,-----------------------------------------.                    ,-----------------------------------------.
  * |      |      |      |      |      |      |                    |      |      |      |      |      |      |
  * |------+------+------+------+------+------|                    |------+------+------+------+------+------|
- * | mac  | low  | rise | adj  |numpad|  sw  |                    |      |      |      |      |      |QK_BOOT|
+ * | mac  | low  | rise | adj  |numpad| tmux |                    |  sw  |      |      |      |      |QK_BOOT|
  * |------+------+------+------+------+------|                    |------+------+------+------+------+------|
  * | win  |      |      |      |      |      |-------.    ,-------|      |      |      |      |      |EEP_RST|
  * |------+------+------+------+------+------|       |    |       |------+------+------+------+------+------|
@@ -263,7 +303,7 @@ MT(MOD_LCTL,KC_CAPS),KC_Z,KC_X, KC_C,  KC_V  ,  KC_B, KC_D_MUTE,  KC_MUTE,KC_N, 
   //,------------------------------------------------.                    ,---------------------------------------------------.
   _______, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                   XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,XXXXXXX, XXXXXXX,
   //|------+-------+--------+--------+--------+------|                   |--------+-------+--------+--------+--------+---------|
-  TO(0),   TO(2),   TO(3),   TO(4),   TO(5),   TO(6),                      KC_NO ,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   QK_BOOT,
+  TO(0),   TO(2),   TO(3),   TO(4),   TO(5),   TO(6),                      TO(7) ,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   QK_BOOT,
   //|------+-------+--------+--------+--------+------|                   |--------+-------+--------+--------+--------+---------|
   TO(1),   KC_NO, KC_BRIU,   KC_NO,   KC_NO,   KC_NO,                      KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   EEP_RST,
   //|------+-------+--------+--------+--------+------|  ===  |   |  ===  |--------+-------+--------+--------+--------+---------|
@@ -391,6 +431,9 @@ static void print_status_narrow(void) {
             break;
         case _NUMPAD:
             oled_write_P(PSTR("Nump\n"), false);
+            break;
+        case _TMUX:
+            oled_write_P(PSTR("tmux\n"), false);
             break;
         case _SWITCH:
             oled_write_P(PSTR("Swit\n"), false);
@@ -545,6 +588,72 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         case MC_TMW:
             if (record->event.pressed) {
                 SEND_STRING(SS_LCTL("b")"w");
+            } else {
+            }
+            return false;
+        case MC_TMLeft:
+            if (record->event.pressed) {
+                SEND_STRING(SS_LCTL("b") SS_TAP(X_LEFT));
+            } else {
+            }
+            return false;
+        case MC_TMRght:
+            if (record->event.pressed) {
+                SEND_STRING(SS_LCTL("b") SS_TAP(X_RIGHT));
+            } else {
+            }
+            return false;
+        case MC_TMUp:
+            if (record->event.pressed) {
+                SEND_STRING(SS_LCTL("b") SS_TAP(X_UP));
+            } else {
+            }
+            return false;
+        case MC_TMDn:
+            if (record->event.pressed) {
+                SEND_STRING(SS_LCTL("b") SS_TAP(X_DOWN));
+            } else {
+            }
+            return false;
+        case MC_TMHS:
+            if (record->event.pressed) {
+                SEND_STRING(SS_LCTL("b") "\"");
+            } else {
+            }
+            return false;
+        case MC_TMVis:
+            if (record->event.pressed) {
+                SEND_STRING(SS_LCTL("b") "[");
+            } else {
+            }
+            return false;
+        case MC_TMVS:
+            if (record->event.pressed) {
+                SEND_STRING(SS_LCTL("b") "%");
+            } else {
+            }
+            return false;
+        case MC_ViWL:
+            if (record->event.pressed) {
+                SEND_STRING(SS_LCTL("w") SS_TAP(X_LEFT));
+            } else {
+            }
+            return false;
+        case MC_ViWR:
+            if (record->event.pressed) {
+                SEND_STRING(SS_LCTL("w") SS_TAP(X_RIGHT));
+            } else {
+            }
+            return false;
+        case MC_ViWU:
+            if (record->event.pressed) {
+                SEND_STRING(SS_LCTL("w") SS_TAP(X_UP));
+            } else {
+            }
+            return false;
+        case MC_ViWD:
+            if (record->event.pressed) {
+                SEND_STRING(SS_LCTL("w") SS_TAP(X_DOWN));
             } else {
             }
             return false;
