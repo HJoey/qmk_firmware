@@ -112,7 +112,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|------+-------+--------+--------+--------+------|                   |--------+-------+--------+--------+--------+---------|
 MT(MOD_LSFT,KC_TAB),KC_A,KC_S, KC_D,  KC_F,    KC_G,                      KC_H,    KC_J,   KC_K,    KC_L,    KC_SCLN, KC_QUOT,
   //|------+-------+--------+--------+--------+------|  ===  |   |  ===  |--------+-------+--------+--------+--------+---------|
-MT(MOD_LCTL,KC_CAPS),KC_Z,KC_X, KC_C,  KC_V  , LT(_TMUX,KC_B), KC_D_MUTE,  KC_MUTE,KC_N,    KC_M,   KC_COMM, KC_DOT,  KC_SLSH, KC_RSFT,
+MT(MOD_LCTL,KC_CAPS),KC_Z,KC_X, KC_C,KC_V,LT(_TMUX,KC_B),KC_D_MUTE,  KC_MUTE,KC_N,    KC_M,   KC_COMM, KC_DOT,  KC_SLSH, KC_RSFT,
   //|------+-------+--------+--------+--------+------|  ===  |   |  ===  |--------+-------+--------+--------+--------+---------|
                  KC_GRV  , KC_LOPT, KC_LGUI  , KC_LOWER, KC_SPC  , KC_ENT, KC_RAISE ,KC_RGUI, KC_ROPT, KC_RCTL
   //            \--------+--------+--------+---------+-------|   |--------+---------+--------+---------+-------/
@@ -217,7 +217,7 @@ MT(MOD_LCTL,KC_CAPS),KC_Z,KC_X, KC_C, KC_V, LT(_TMUX,KC_B),    KC_D_MUTE,  KC_MU
  */
   [_ADJUST] = LAYOUT(
   //,------------------------------------------------.                    ,---------------------------------------------------.
-  EEP_RST, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                   XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
+  XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                   XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
   //|------+-------+--------+--------+--------+------|                   |--------+-------+--------+--------+--------+---------|
   QK_BOOT, XXXXXXX,XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                    XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
   //|------+-------+--------+--------+--------+------|                   |--------+-------+--------+--------+--------+---------|
@@ -244,7 +244,7 @@ MT(MOD_LCTL,KC_CAPS),KC_Z,KC_X, KC_C, KC_V, LT(_TMUX,KC_B),    KC_D_MUTE,  KC_MU
  */
 [_NUMPAD] = LAYOUT(
   //,------------------------------------------------.                    ,---------------------------------------------------.
-  _______, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                   _______, KC_NLCK, XXXXXXX, XXXXXXX,KC_PSLS, XXXXXXX,
+  _______, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                   _______, KC_NUM, XXXXXXX, XXXXXXX,KC_PSLS, XXXXXXX,
   //|------+-------+--------+--------+--------+------|                   |--------+-------+--------+--------+--------+---------|
   XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                   XXXXXXX, KC_P7,  KC_P8,   KC_P9,   KC_ASTR, KC_BSPC ,
   //|------+-------+--------+--------+--------+------|                   |--------+-------+--------+--------+--------+---------|
@@ -305,7 +305,7 @@ MT(MOD_LCTL,KC_CAPS),KC_Z,KC_X, KC_C, KC_V, LT(_TMUX,KC_B),    KC_D_MUTE,  KC_MU
   //|------+-------+--------+--------+--------+------|                   |--------+-------+--------+--------+--------+---------|
   TO(0),   TO(2),   TO(3),   TO(4),   TO(5),   TO(6),                      TO(7) ,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   QK_BOOT,
   //|------+-------+--------+--------+--------+------|                   |--------+-------+--------+--------+--------+---------|
-  TO(1),   KC_NO, KC_BRIU,   KC_NO,   KC_NO,   KC_NO,                      KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   EEP_RST,
+  TO(1),   KC_NO, KC_BRIU,   KC_NO,   KC_NO,   KC_NO,                      KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   XXXXXXX,
   //|------+-------+--------+--------+--------+------|  ===  |   |  ===  |--------+-------+--------+--------+--------+---------|
   KC_SYSTEM_SLEEP,KC_NO,KC_NO,KC_NO,  KC_NO,   KC_NO, KC_NO,      KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,
   //|------+-------+--------+--------+--------+------|  ===  |   |  ===  |--------+-------+--------+--------+--------+---------|
@@ -664,17 +664,19 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 #ifdef ENCODER_ENABLE
 
 bool encoder_update_user(uint8_t index, bool clockwise) {
-    if (index == 0) {
+    if (index == 0) {//left hand
         if (clockwise) {
             tap_code(KC_BRIU);
         } else {
             tap_code(KC_BRID);
         }
-    } else if (index == 1) {
+    } else if (index == 1) {//right hand
         if (clockwise) {
             tap_code(KC_VOLU);
+            //tap_code(KC_1);
         } else {
             tap_code(KC_VOLD);
+            //tap_code(KC_2);
         }
     }
     return true;
