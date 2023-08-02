@@ -673,13 +673,11 @@ bool encoder_update_user(uint8_t index, bool clockwise) {
     } else if (index == 1) {//right hand
         if (clockwise) {
             tap_code(KC_VOLU);
-            //tap_code(KC_1);
         } else {
             tap_code(KC_VOLD);
-            //tap_code(KC_2);
         }
     }
-    return true;
+    return false;
 }
 
 #endif
