@@ -35,7 +35,7 @@
 #define TAPPING_FORCE_HOLD
 #ifdef TAPPING_TERM
     #undef TAPPING_TERM
-    #define TAPPING_TERM 150
+    #define TAPPING_TERM 100
 #endif
 #define ENCODER_DIRECTION_FLIP
 
